@@ -7,7 +7,7 @@
 }
 
 $color-primary: #b42018;
-$color-secondary: #e6e600;
+$color-secondary: #e9e910;
 
 $display-sm: 576px;
 $display-md: 768px;
@@ -49,7 +49,7 @@ ul {
   list-style: none;
 }
 
-h2 {
+%home-h2 {
   position: relative;
   padding: 0.6rem;
   margin-bottom: 2rem;
@@ -67,7 +67,7 @@ h2 {
     left: -3rem;
     width: 3rem;
     height: 3rem;
-    background-color: $color-secondary;
+    background-color: #00a1e5;
     z-index: -1;
   }
   &::after {
@@ -78,7 +78,7 @@ h2 {
     left: 0;
     width: 3rem;
     height: 3rem;
-    background-color: darken($color: $color-secondary, $amount: 3);
+    background-color: $color-secondary;
     z-index: -1;
   }
 }
@@ -269,6 +269,10 @@ main {
     flex-basis: 48%;
     margin-bottom: 2rem;
 
+    h2 {
+      @extend %home-h2;
+    }
+
     p {
       text-indent: 10px;
       margin-bottom: 1rem;
@@ -368,6 +372,10 @@ main {
 #species {
   grid-column: 2/3;
 
+  h2 {
+    @extend %home-h2;
+  }
+
   ul {
     display: flex;
     flex-wrap: wrap;
@@ -420,6 +428,7 @@ main {
 
           svg {
             margin-left: 0.4rem;
+            max-width: 12px;
           }
 
           &:hover {
@@ -466,9 +475,15 @@ footer {
         margin-top: 1rem;
       }
 
+      h4 {
+        width: 100%;
+        text-align: center;
+      }
+
       svg {
         font-size: 2rem !important;
         margin-right: 0.6rem;
+        max-width: 30px;
       }
 
       &.social {

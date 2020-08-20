@@ -8,17 +8,34 @@ import {
   faPhone,
   faMapMarkerAlt,
 } from "@fortawesome/free-solid-svg-icons";
-import { UIProvider } from "../components/contextApi/uiStore";
+import { motion } from "framer-motion";
 
 library.add(fab, faArrowRight, faEnvelope, faPhone, faMapMarkerAlt);
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps, router }) {
   return (
-    <UIProvider>
+    <motion.div
+      key={router.route}
+      initial="pageInitial"
+      animate="pageAnimate"
+      exit="pageExit"
+      transition={{ duration: 1 }}
+      variants={{
+        pageInitial: {
+          opacity: 0,
+        },
+        pageAnimate: {
+          opacity: 1,
+        },
+        pageExit: {
+          opacity: 0,
+        },
+      }}
+    >
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </UIProvider>
+    </motion.div>
   );
 }
 
