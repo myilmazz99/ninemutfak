@@ -19,6 +19,7 @@ $box-shadow: 1rem 1rem 1rem rgba(0, 0, 0, 0.175);
 html {
   font-size: 14px;
   scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
 
   @media (min-width: $display-md) {
     font-size: 15px;
@@ -226,15 +227,23 @@ nav {
 .jumbotron {
   grid-column: 1/-1;
   position: relative;
-  height: 70vh;
+  height: 80vh;
   display: flex;
   align-items: flex-end;
   color: #fff;
 
   div {
     padding: 1rem;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: transparentize($color: $color-primary, $amount: 0.4);
     width: 100%;
+
+    h1 {
+      font-size: 1.9rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
   }
 
   video {
@@ -254,7 +263,7 @@ nav {
 main {
   display: grid;
   grid-template-columns: 1fr 10fr 1fr;
-  row-gap: 4rem;
+  row-gap: 6rem;
 }
 
 //ABOUT
@@ -264,6 +273,8 @@ main {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 1200px;
+  justify-self: center;
 
   .about-text {
     flex-basis: 48%;
@@ -325,6 +336,7 @@ main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    max-width: 1200px;
 
     li {
       margin-bottom: 1rem;
@@ -371,6 +383,8 @@ main {
 
 #species {
   grid-column: 2/3;
+  max-width: 1200px;
+  justify-self: center;
 
   h2 {
     @extend %home-h2;
@@ -435,10 +449,6 @@ main {
             color: darken($color: $color-secondary, $amount: 10);
           }
         }
-      }
-
-      @media (min-width: $display-lg) {
-        flex-basis: 30%;
       }
     }
 
@@ -518,20 +528,24 @@ footer {
   grid-column: 1/-1;
   display: grid;
   grid-template-columns: 1fr 10fr 1fr;
+  grid-template-rows: 1px 1fr 1px;
+  row-gap: 6rem;
   width: 100%;
   background-image: url(https://ik.imagekit.io/i6jr6aixj7/ninemutfak/menubg_I3oymf6YW.jpg);
 
   .menu {
     grid-column: 2/3;
+    grid-row: 2/3;
     background-image: url(https://ik.imagekit.io/i6jr6aixj7/ninemutfak/zemin-01_EwgDDtnZJNZ.jpg);
     background-size: contain;
     background-repeat: repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 6rem 0;
     border-radius: 5px;
     box-shadow: $box-shadow;
+    max-width: 1200px;
+    justify-self: center;
 
     figure.menu-logo {
       width: 100%;
