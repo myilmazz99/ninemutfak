@@ -3,6 +3,7 @@ import Jumbotron from "../components/Jumbotron";
 import About from "../components/home/About";
 import Services from "../components/home/Services";
 import Species from "../components/home/Species";
+import dbConnect from "../utils/dbConnect";
 
 export default function Home({ categories }) {
   return (
@@ -34,11 +35,11 @@ export default function Home({ categories }) {
 }
 
 export async function getStaticProps(context) {
-  const res = await fetch("http://localhost:3000/api/categories");
-  const { data } = await res.json();
+  const { db } = await dbConnect();
+  const categories = await db.collection("categories").find({}).toArray();
   return {
     props: {
-      categories: data,
+      categories: JSON.parse(JSON.stringify(categories)),
     },
   };
 }

@@ -1,12 +1,14 @@
 import { toggleModal, Modal } from "../../../components/common/Modal";
 import FoodModal from "../../../components/menu/FoodModal";
 import Head from "next/head";
+import dbConnect from "../../../utils/dbConnect";
+import { ObjectId } from "mongodb";
 
 export default function Index({ foods }) {
   return (
     <>
       <Head>
-        <title>Ni & Ne Mutfak - {foods[0].categoryId.name}</title>
+        <title>Ni & Ne Mutfak - {foods[0].category[0].name}</title>
       </Head>
       <section id="menu-page">
         <section className="menu">
@@ -16,7 +18,7 @@ export default function Index({ foods }) {
               alt="menu caption"
             />
             <figcaption>
-              <h1>{foods[0].categoryId.name}</h1>
+              <h1>{foods[0].category[0].name}</h1>
             </figcaption>
           </figure>
           <ul>
@@ -41,22 +43,35 @@ export default function Index({ foods }) {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(
-    `http://localhost:3000/api/foods/category/${params.categoryId}`
-  );
-  const { data } = await res.json();
+  const { db } = await dbConnect();
+  const foods = await db
+    .collection("foods")
+    .aggregate([
+      {
+        $match: { categoryId: ObjectId(params.categoryId) },
+      },
+      {
+        $lookup: {
+          from: "categories",
+          localField: "categoryId",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+    ])
+    .toArray();
+
   return {
     props: {
-      foods: data,
+      foods: JSON.parse(JSON.stringify(foods)),
     },
   };
 }
 
 export async function getStaticPaths() {
-  const res = await fetch("http://localhost:3000/api/categories");
-  const categories = await res.json();
-
-  const paths = categories.data.map((i) => ({
+  const { db } = await dbConnect();
+  const categories = await db.collection("categories").find({}).toArray();
+  const paths = JSON.parse(JSON.stringify(categories)).map((i) => ({
     params: { categoryId: i._id },
   }));
 
